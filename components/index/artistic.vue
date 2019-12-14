@@ -49,86 +49,11 @@ export default {
     return {
       kind: 'all',
       list: {
-        all: [{
-          title: '北京饭店阳光咖啡厅',
-          pos: '特价自助晚餐',
-          price: '238',
-          img: 'https://p0.meituan.net/msmerchant/1a8aaac8cfcf76fae83c2ecd6405bd4c1457315.jpg@368w_208h_1e_1c'
-        },{
-          title: '万达影城（CBD店）',
-          pos: '免押金，可停车，IMAX厅',
-          price: '45',
-          img: 'https://p1.meituan.net/deal/201003/wanda.jpg@368w_208h_1e_1c'
-        },{
-          title: '千恒短发设计（新世界店）',
-          pos: '托尼老师亲自操刀',
-          price: '183',
-          img: 'https://p0.meituan.net/wedding/7f274360936a5233902be9afe5054eef4134276.jpg@240w_180h_1e_1c_1l%7Cwatermark=1&&r=2&p=9&x=2&y=2&relative=1&o=20%7C368w_208h_1e_1c'
-        }],
-        part: [{
-          title: '北京饭店阳光咖啡厅',
-          pos: '特价自助晚餐',
-          price: '238',
-          img: 'https://p0.meituan.net/msmerchant/1a8aaac8cfcf76fae83c2ecd6405bd4c1457315.jpg@368w_208h_1e_1c'
-        },{
-          title: '万达影城（CBD店）',
-          pos: '免押金，可停车，IMAX厅',
-          price: '45',
-          img: 'https://p1.meituan.net/deal/201003/wanda.jpg@368w_208h_1e_1c'
-        },{
-          title: '千恒短发设计（新世界店）',
-          pos: '托尼老师亲自操刀',
-          price: '183',
-          img: 'https://p0.meituan.net/wedding/7f274360936a5233902be9afe5054eef4134276.jpg@240w_180h_1e_1c_1l%7Cwatermark=1&&r=2&p=9&x=2&y=2&relative=1&o=20%7C368w_208h_1e_1c'
-        }],
-        spa: [{
-          title: '北京饭店阳光咖啡厅',
-          pos: '特价自助晚餐',
-          price: '238',
-          img: 'https://p0.meituan.net/msmerchant/1a8aaac8cfcf76fae83c2ecd6405bd4c1457315.jpg@368w_208h_1e_1c'
-        },{
-          title: '万达影城（CBD店）',
-          pos: '免押金，可停车，IMAX厅',
-          price: '45',
-          img: 'https://p1.meituan.net/deal/201003/wanda.jpg@368w_208h_1e_1c'
-        },{
-          title: '千恒短发设计（新世界店）',
-          pos: '托尼老师亲自操刀',
-          price: '183',
-          img: 'https://p0.meituan.net/wedding/7f274360936a5233902be9afe5054eef4134276.jpg@240w_180h_1e_1c_1l%7Cwatermark=1&&r=2&p=9&x=2&y=2&relative=1&o=20%7C368w_208h_1e_1c'
-        }],
-        movie: [{
-          title: '北京饭店阳光咖啡厅',
-          pos: '特价自助晚餐',
-          price: '238',
-          img: 'https://p0.meituan.net/msmerchant/1a8aaac8cfcf76fae83c2ecd6405bd4c1457315.jpg@368w_208h_1e_1c'
-        },{
-          title: '万达影城（CBD店）',
-          pos: '免押金，可停车，IMAX厅',
-          price: '45',
-          img: 'https://p1.meituan.net/deal/201003/wanda.jpg@368w_208h_1e_1c'
-        },{
-          title: '千恒短发设计（新世界店）',
-          pos: '托尼老师亲自操刀',
-          price: '183',
-          img: 'https://p0.meituan.net/wedding/7f274360936a5233902be9afe5054eef4134276.jpg@240w_180h_1e_1c_1l%7Cwatermark=1&&r=2&p=9&x=2&y=2&relative=1&o=20%7C368w_208h_1e_1c'
-        }],
-        travel: [{
-          title: '北京饭店阳光咖啡厅',
-          pos: '特价自助晚餐',
-          price: '238',
-          img: 'https://p0.meituan.net/msmerchant/1a8aaac8cfcf76fae83c2ecd6405bd4c1457315.jpg@368w_208h_1e_1c'
-        },{
-          title: '万达影城（CBD店）',
-          pos: '免押金，可停车，IMAX厅',
-          price: '45',
-          img: 'https://p1.meituan.net/deal/201003/wanda.jpg@368w_208h_1e_1c'
-        },{
-          title: '千恒短发设计（新世界店）',
-          pos: '托尼老师亲自操刀',
-          price: '183',
-          img: 'https://p0.meituan.net/wedding/7f274360936a5233902be9afe5054eef4134276.jpg@240w_180h_1e_1c_1l%7Cwatermark=1&&r=2&p=9&x=2&y=2&relative=1&o=20%7C368w_208h_1e_1c'
-        }]
+        all: [],
+        part: [],
+        spa: [],
+        movie: [],
+        travel: []
       }
     }
   },
@@ -137,16 +62,80 @@ export default {
       return this.list[this.kind]
     }
   },
+  async mounted(){
+    let self=this;
+    let {status,data:{count,pois}}=await self.$axios.get('/search/resultsByKeywords',{
+      params:{
+        keyword:'景点',
+        city:self.$store.state.geo.position.city
+      }
+    })
+    if(status===200&&count>0){
+      let r= pois.filter(item=>item.photos.length).map(item=>{
+        return {
+          title:item.name,
+          pos:item.type.split(';')[0],
+          price:item.biz_ext.cost||'暂无',
+          img:item.photos[0].url,
+          url:'//abc.com'
+        }
+      })
+      self.list[self.kind]=r.slice(0,9)
+    }else{
+      self.list[self.kind]=[]
+    }
+  },
   methods: {
-    over: function (e) {
+    async mounted() {
+      let self = this
+      let {status,data:{count,pois}}=await self.$axios.get('/search/resultsByKeywords',{
+        params:{
+          keyword:'景点',
+          city:self.$store.state.geo.position.city
+        }
+      })
+      if(status===200&&count>0){
+        let r= pois.filter(item=>item.photos.length).map(item=>{
+          return {
+            title:item.name,
+            pos:item.type.split(';')[0],
+            price:item.biz_ext.cost||'暂无',
+            img:item.photos[0].url,
+            url:'//abc.com'
+          }
+        })
+        self.list[self.kind]=r.slice(0,9)
+      }else{
+        self.list[self.kind]=[]
+      }      
+    },
+    over: async function (e) {
       let dom = e.target
       let tag = dom.tagName.toLowerCase()
       let self = this
-      console.log(tag);
-      
       if (tag === 'dd') {
         this.kind = dom.getAttribute('kind')
         let keyword = dom.getAttribute('keyword')
+        let {status,data:{count,pois}}=await self.$axios.get('/search/resultsByKeywords',{
+          params:{
+            keyword,
+            city:self.$store.state.geo.position.city
+          }
+        })
+        if(status===200&&count>0){
+          let r= pois.filter(item=>item.photos.length).map(item=>{
+            return {
+              title:item.name,
+              pos:item.type.split(';')[0],
+              price:item.biz_ext.cost||'暂无',
+              img:item.photos[0].url,
+              url:'//abc.com'
+            }
+          })
+          self.list[self.kind]=r.slice(0,9)
+        }else{
+          self.list[self.kind]=[]
+        }
       }
     }
   },
