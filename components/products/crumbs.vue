@@ -10,7 +10,7 @@
 <script>
 export default {
   props:{
-    keywod:{
+    keyword:{
       type:String,
       default:''
     }

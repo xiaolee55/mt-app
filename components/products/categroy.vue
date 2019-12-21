@@ -5,7 +5,7 @@
       <dt>全部</dt>
       <dd
         v-for="(item,idx) in types"
-        :key='idx'>
+        :key="idx">
         <iselect
           :name="item.type"
           :list="item.module"/>
@@ -16,7 +16,7 @@
       <dt>全部</dt>
       <dd
         v-for="(item,idx) in areas"
-        :key='idx'>
+        :key="idx">
         <iselect
           :name="item.type"
           :list="item.module"/>
@@ -24,3 +24,59 @@
     </dl>
   </div>
 </template>
+
+<script>
+import Iselect from '@/components/products/iselect.vue'
+
+export default {
+  components: {
+    Iselect
+  },  
+  props: {
+    types:{
+      type:Array,
+      default: ()=>[]
+    },
+    areas:{
+      type:Array,
+      default: ()=>[]  
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+  .m-product-categroy{
+    padding: 15px 20px 0;
+    background: #FFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    color: #303133;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  .classic{
+    display: flex;
+    padding-bottom: 10px;
+    >dt{
+      width: 80px;
+      &:nth-child(2){
+        border-radius: 100px;
+        background: #13D1BE;
+        color: #FFF;
+        height: 22px;
+        line-height: 22px;
+        width: 40px;
+        box-sizing: border-box;
+        margin-right: 40px;
+        text-align: center;
+      }
+    }
+    &:nth-child(1){
+      dd{
+        border-bottom: 1px solid #ddd;
+      }
+    }
+  }
+</style>

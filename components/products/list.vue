@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="m-products-list">
     <dl>
       <dd
         v-for="item in nav"
         :key="item.name"
-        :class="[item.name,item.active?'s-nav-active':'']"
-        @click="navSelect">{{item.txt}}</dd>
+        :class="[item.name,item.acitve?'s-nav-active':'']"
+        @click="navSelect"
+      >{{ item.txt }}</dd>
     </dl>
     <ul>
-      <Item 
+      <Item
         v-for="(item,idx) in list"
         :key="idx"
         :meta="item"/>
@@ -18,6 +19,7 @@
 
 <script>
 import Item from './product.vue'
+
 export default {
   components:{
     Item
@@ -27,12 +29,7 @@ export default {
       type: Array,
       default:()=>[]
     }
-  }
-}
-</script>
-
-<script>
-export default {
+  },
   data() {
     return {
       nav: [
@@ -55,6 +52,11 @@ export default {
         }
         
       ]
+    }
+  },
+  methods: {
+    navSelect(){
+      
     }
   },
 }
