@@ -67,8 +67,6 @@ export default {
         city:ctx.store.state.geo.position.city
       }
     })
-    console.log(list);
-    
     if(status===200){
       //asyncData返回的数据和data中的一样可以直接用
       return {

@@ -1,3 +1,4 @@
+<!--菜的列表-->
 <template lang="html">
   <div class="m-detail-list">
     <ul>
@@ -11,18 +12,18 @@
 </template>
 
 <script>
-import Item from "./item.vue";
+import Item from './item.vue'
 export default {
   components: {
     Item
   },
   props: {
     list: {
-      type: Array,
-      default: () => {
-        return [];
+      type:Array,
+      default:()=>{
+        return []
       }
     }
-  }
-};
+  },
+}
 </script>

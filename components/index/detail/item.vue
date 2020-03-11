@@ -1,15 +1,15 @@
+<!--每道菜的详细信息-->
 <template>
+<!-- v-if="meta.photos.length" -->
   <li
-    v-if="meta.photos.length"
-    class="m-detail-item"
-  >
+    class="m-detail-item">
     <dl class="section">
-      <dd>
+      <!-- <dd>
+        //防止没有照片时显示不正常
         <img
           :src="meta.photos[0].url"
-          :alt="meta.photos[0].title"
-        >
-      </dd>
+          :alt="meta.photos[0].title">
+      </dd> -->
       <dd>
         <h4>{{ meta.name }}</h4>
         <p>
@@ -25,8 +25,7 @@
         <el-button
           type="warning"
           round
-          @click="createCart"
-        >立即抢购</el-button>
+          @click="createCart">立即抢购</el-button>
       </dd>
     </dl>
   </li>
@@ -38,39 +37,40 @@ export default {
     meta: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     }
   },
   methods: {
-    createCart: async function() {
+    createCart: async function () {   //创建购物车
       let self = this;
       let {
         status,
-        data: { code, id }
-      } = await this.$axios.post("/cart/create", {
+        data: {
+          code,
+          id
+        }
+      } = await this.$axios.post('/cart/create', {
         params: {
-          // 模拟一个产品id
-          id: Math.random()
-            .toString()
-            .slice(3, 9),
+          id: Math.random().toString().slice(3, 9),
           detail: {
             name: self.meta.name,
             price: self.meta.biz_ext.cost,
             imgs: self.meta.photos
           }
         }
-      });
-      // 创建购物车后跳转
-      if (status === 200 && code === 0) {
-        window.location.href = `/cart/?id=${id}`;
-      } else {
-        console.log("error");
+      })
+      if(status===200&&code===0){   //通过购物车id来关联购物车页面和商品详情页
+        window.location.href=`/cart/?id=${id}`
+      }else{
+        console.log('error')
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
+
+
 </style>

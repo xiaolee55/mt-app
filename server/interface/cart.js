@@ -3,7 +3,7 @@ import axios from './utils/axios'
 import Cart from '../dbs/models/cart'
 import md5 from 'crypto-js/md5'
 
-let router = new Router({prefix: '/cart'})
+let router = new Router({ prefix: '/cart' })
 
 router.post('/create', async ctx => {
   if (!ctx.isAuthenticated()) {
@@ -20,8 +20,10 @@ router.post('/create', async ctx => {
         detail
       }
     } = ctx.request.body
-    let cart = new Cart({id, cartNo, time, user: ctx.session.passport.user, detail})
+
+    let cart = new Cart({ id, cartNo, time, user: ctx.session.passport.user, detail })
     let result = await cart.save()
+
     if (result) {
       ctx.body = {
         code: 0,
@@ -38,10 +40,11 @@ router.post('/create', async ctx => {
 })
 
 router.post('/getCart', async ctx => {
-  let {id} = ctx.request.body
+  let { id } = ctx.request.body
   console.log(id);
+
   try {
-    let result = await Cart.findOne({cartNo: id})
+    let result = await Cart.findOne({ cartNo: id })
     ctx.body = {
       code: 0,
       data: result
@@ -56,4 +59,4 @@ router.post('/getCart', async ctx => {
   }
 })
 
-export default router
+module.exports = router

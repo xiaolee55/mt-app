@@ -1,3 +1,4 @@
+<!-- 产品列表页的面包屑组件 -->
 <template>
   <div class="m-crumbs">
     <el-breadcrumb separator=">">
@@ -12,13 +13,13 @@
 export default {
   props: {
     keyword: {
-      type: String,
-      default: ""
+      type:String,
+      default:''
     },
     type: {
-      type: String,
-      default: ""
+      type:String,
+      default:''
     }
   }
-};
+}
 </script>

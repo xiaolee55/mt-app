@@ -49,6 +49,8 @@ export default {
         price:this.cart[0].price,
         id:this.cartNo
       })
+      console.log(status,code);
+      
       if(status==200&&code===0){
         this.$alert(`恭喜您，已成功下单，订单号:${id}`,'下单成功',{
           confirmButtonText:'确定',
@@ -59,6 +61,7 @@ export default {
       }
     }
   },
+  // Nuxt.js 会将 asyncData 返回的数据融合组件 data 方法返回的数据一并返回给当前组件。
   async asyncData(ctx){
     let {status,data:{code,data:{name,price}}}=await ctx.$axios.post('/cart/getCart',{
       id:ctx.query.id
